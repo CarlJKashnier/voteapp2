@@ -1,5 +1,5 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
-var User = require("./users.js");
+var User = require("./user.js");
 
 module.exports = function(passport) {
 
@@ -13,14 +13,15 @@ module.exports = function(passport) {
         });
     });
 
-    passport.use(new FacebookStrategy({
+    passport.use('facebook', new FacebookStrategy({
             clientID: process.env.fb_appID,
-            clientSecret: process.env.fb_Secret,
-            callbackURL: '/auth/facebook/callback'
+            clientSecret: process.env.fb_appSecret,
+            callbackURL: 'http://localhost:8888/auth/facebook/callback'
         },
 
         function(accessToken, refreshToken, profile, callback) {
             process.nextTick(function() {
+              console.log(profile)
                 User.findOne({
                     'facebook.id': profile.id
                 }, function(err, user) {

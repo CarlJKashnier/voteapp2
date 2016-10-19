@@ -36,7 +36,7 @@ app.use(passport.session());
 
 require('./routes.js')(app, passport);
 app.use(express.static('public'));
-// ### require('./passport.js')(passport);
+require('./passport.js')(passport);
 
 //server listen
 var server = app.listen(process.env.PORT || 8888);
